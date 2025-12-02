@@ -1,15 +1,16 @@
 package fr.sidranie.training.domain;
 
-import fr.sidranie.training.data.password.Password;
-import fr.sidranie.training.data.password.PasswordConverter;
-import fr.sidranie.training.data.username.Username;
-import fr.sidranie.training.data.username.UsernameConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import fr.sidranie.training.data.password.Password;
+import fr.sidranie.training.data.password.PasswordConverter;
+import fr.sidranie.training.data.username.Username;
+import fr.sidranie.training.data.username.UsernameConverter;
 
 @Entity
 @Table(name = "users")
@@ -69,5 +70,4 @@ public class User {
         sb.append('}');
         return sb.toString();
     }
-
 }
