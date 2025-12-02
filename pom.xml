@@ -12,35 +12,47 @@
   <properties>
     <java.version>25</java.version>
     <maven.compiler.release>${java.version}</maven.compiler.release>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <hibernate.version>7.1.10.Final</hibernate.version>
+    <h2.version>2.4.240</h2.version>
+    <slf4j.version>2.0.17</slf4j.version>
+    <logback.version>1.5.21</logback.version>
+    <junit.jupiter.version>6.0.1</junit.jupiter.version>
   </properties>
 
   <dependencies>
+    <!-- Database -->
     <dependency>
         <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-core</artifactId>
-        <version>7.1.10.Final</version>
+        <version>${hibernate.version}</version>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>2.4.240</version>
+      <version>${h2.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>6.0.1</version>
-      <scope>test</scope>
-    </dependency>
+
+    <!-- Logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>2.0.17</version>
-  </dependency>
+      <version>${slf4j.version}</version>
+    </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.5.21</version>
+      <version>${logback.version}</version>
+    </dependency>
+
+    <!-- Tests -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.jupiter.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
