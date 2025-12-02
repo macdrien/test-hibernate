@@ -5,7 +5,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import fr.sidranie.training.domain.Event;
+import fr.sidranie.training.domain.User;
 
 public class SessionFactoryProvider {
     
@@ -19,7 +19,7 @@ public class SessionFactoryProvider {
 
         try {
             instance = new MetadataSources(registry)
-                    .addAnnotatedClass(Event.class)
+                    .addAnnotatedClass(User.class)
                     .buildMetadata()
                     .buildSessionFactory();
         } catch (Exception e) {
