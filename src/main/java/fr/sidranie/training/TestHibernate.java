@@ -1,29 +1,33 @@
 package fr.sidranie.training;
 
-import jakarta.persistence.EntityManager;
-
-import org.hibernate.SessionFactory;
+import org.hibernate.metamodel.internal.FullNameImplicitDiscriminatorStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.sidranie.training.data.password.Password;
-import fr.sidranie.training.data.username.Username;
-import fr.sidranie.training.domain.User;
+import fr.sidranie.training.user.User;
+import fr.sidranie.training.user.UserRepository;
+import fr.sidranie.training.user.data.password.Password;
+import fr.sidranie.training.user.data.username.Username;
 
 public class TestHibernate {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestHibernate.class);
 
     public static void main(String[] args) {
-        SessionFactory sessionFactory = SessionFactoryProvider.getSessionFactory();
-        EntityManager entityManager = sessionFactory.createEntityManager();
+        UserRepository userRepository = new UserRepository();
 
-        entityManager.getTransaction().begin();
-        User user = new User(new Username("macdrien"), new Password("password123"));
-        entityManager.persist(user);
-        entityManager.getTransaction().commit();
+        User user = new User(
+            new Username("john_doe"),
+            new Password("securePassword123")
+        );
+        userRepository.save(user);
 
-        entityManager.createQuery("from User", User.class)
-            .getResultList()
-            .forEach(result -> LOGGER.debug("{}", result));
+        userRepository.findAll().forEach(result -> LOGGER.debug("{}", result));
+
+        User foundUser = userRepository.findById(1L);
+        if (foundUser != null) {
+            LOGGER.info("User found {}", foundUser.toString());
+        } else {
+            LOGGER.warn("User not found");
+        }
     }
 }

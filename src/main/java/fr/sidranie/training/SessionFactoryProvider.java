@@ -5,7 +5,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import fr.sidranie.training.domain.User;
+import fr.sidranie.training.user.User;
 
 public class SessionFactoryProvider {
     

@@ -1,4 +1,4 @@
-package fr.sidranie.training.data.password;
+package fr.sidranie.training.user.data.password;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,4 +1,4 @@
-package fr.sidranie.training.data.username;
+package fr.sidranie.training.user.data.username;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

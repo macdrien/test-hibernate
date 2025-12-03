@@ -1,4 +1,4 @@
-package fr.sidranie.training.domain;
+package fr.sidranie.training.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -7,10 +7,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import fr.sidranie.training.data.password.Password;
-import fr.sidranie.training.data.password.PasswordConverter;
-import fr.sidranie.training.data.username.Username;
-import fr.sidranie.training.data.username.UsernameConverter;
+import fr.sidranie.training.user.data.password.Password;
+import fr.sidranie.training.user.data.password.PasswordConverter;
+import fr.sidranie.training.user.data.username.Username;
+import fr.sidranie.training.user.data.username.UsernameConverter;
 
 @Entity
 @Table(name = "users")

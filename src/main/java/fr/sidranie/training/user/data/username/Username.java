@@ -1,4 +1,4 @@
-package fr.sidranie.training.data.username;
+package fr.sidranie.training.user.data.username;
 
 public class Username {
     private String value;

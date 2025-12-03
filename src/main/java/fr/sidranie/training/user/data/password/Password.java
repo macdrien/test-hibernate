@@ -1,4 +1,4 @@
-package fr.sidranie.training.data.password;
+package fr.sidranie.training.user.data.password;
 
 public class Password {
     private String value;
