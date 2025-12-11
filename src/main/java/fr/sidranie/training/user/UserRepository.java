@@ -2,11 +2,10 @@ package fr.sidranie.training.user;
 
 import java.util.List;
 
-import jakarta.persistence.EntityManager;
-
 import fr.sidranie.training.SessionFactoryProvider;
-import fr.sidranie.training.user.User;
 import fr.sidranie.training.user.data.username.Username;
+
+import jakarta.persistence.EntityManager;
 
 public class UserRepository {
     private final EntityManager entityManager;
