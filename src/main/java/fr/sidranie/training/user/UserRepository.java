@@ -21,7 +21,7 @@ public class UserRepository {
 
     public void save(User user) {
         if (user.getId() != null) {
-            throw new IllegalArgumentException("User already have an id");
+            throw new IllegalArgumentException("User already has an id");
         }
         if (findByUsername(user.getUsername()) != null) {
             throw new IllegalArgumentException("Username already exists");

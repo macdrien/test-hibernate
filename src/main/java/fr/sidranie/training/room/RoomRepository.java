@@ -21,7 +21,7 @@ public class RoomRepository {
 
     public void save(Room room) {
         if (room.getId() != null) {
-            throw new IllegalArgumentException("Room already have an id");
+            throw new IllegalArgumentException("Room already has an id");
         }
         if (findByName(room.getName()) != null) {
             throw new IllegalArgumentException("Room already exists");

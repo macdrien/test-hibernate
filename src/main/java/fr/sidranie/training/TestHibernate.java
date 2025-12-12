@@ -3,6 +3,8 @@ package fr.sidranie.training;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.sidranie.training.reservation.Reservation;
+import fr.sidranie.training.reservation.ReservationService;
 import fr.sidranie.training.room.Room;
 import fr.sidranie.training.room.RoomService;
 import fr.sidranie.training.room.data.roomName.RoomName;
@@ -19,6 +21,7 @@ public class TestHibernate {
     public static void main(String[] args) {
         UserService userService = new UserService();
         RoomService roomService = new RoomService();
+        ReservationService reservationService = new ReservationService();
 
         User user = new User(
             new Username("john_doe"),
@@ -40,5 +43,9 @@ public class TestHibernate {
         Room room = new Room(new RoomName("Mulhouse"));
         roomService.createRoom(room);
         roomService.getAllRooms().forEach(result -> LOGGER.debug("{}", result));
+
+        Reservation reservation = new Reservation();
+        reservationService.createReservation(reservation);
+        reservationService.getAllReservations().forEach(result -> LOGGER.debug("{}", result));
     }
 }
