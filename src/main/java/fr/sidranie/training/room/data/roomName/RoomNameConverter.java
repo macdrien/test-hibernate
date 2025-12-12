@@ -20,5 +20,4 @@ public class RoomNameConverter implements AttributeConverter<RoomName, String> {
         }
         return new RoomName(dbData);
     }
-
 }

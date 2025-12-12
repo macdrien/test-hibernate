@@ -1,6 +1,9 @@
 package fr.sidranie.training.reservation;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import fr.sidranie.training.reservation.data.reservationDateTime.ReservationDateTime;
 
 public class ReservationService {
     private final ReservationRepository reservationRepository;
@@ -14,6 +17,7 @@ public class ReservationService {
     }
 
     public void createReservation(Reservation reservation) {
+        reservation.setReservationDateTime(ReservationDateTime.now());
         reservationRepository.save(reservation);
     }
 
