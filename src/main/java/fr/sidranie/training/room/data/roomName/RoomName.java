@@ -1,5 +1,7 @@
 package fr.sidranie.training.room.data.roomName;
 
+import java.util.Objects;
+
 public class RoomName {
     private String value;
 
@@ -13,6 +15,26 @@ public class RoomName {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RoomName other = (RoomName) obj;
+        return Objects.equals(this.value, other.getValue());
     }
 
     @Override

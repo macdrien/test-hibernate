@@ -1,6 +1,7 @@
 package fr.sidranie.training.reservation.data.reservationDateTime;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ReservationDateTime {
     private LocalDateTime value;
@@ -22,6 +23,26 @@ public class ReservationDateTime {
 
     public void setValue(LocalDateTime value) {
         this.value = value;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ReservationDateTime other = (ReservationDateTime) obj;
+        return Objects.equals(this.value, other.getValue());
     }
 
     @Override

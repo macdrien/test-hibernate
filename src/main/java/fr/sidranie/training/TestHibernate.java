@@ -32,15 +32,7 @@ public class TestHibernate {
             new LastName("Doe")
         );
         userService.registerUser(user);
-
         userService.getAllUsers().forEach(result -> LOGGER.debug("{}", result));
-
-        User foundUser = userService.getUserById(1L);
-        if (foundUser != null) {
-            LOGGER.info("User found {}", foundUser.toString());
-        } else {
-            LOGGER.warn("User not found");
-        }
 
         Room mulhouse = new Room(new RoomName("Mulhouse"));
         roomService.createRoom(mulhouse);
@@ -48,7 +40,7 @@ public class TestHibernate {
         roomService.createRoom(albi);
         roomService.getAllRooms().forEach(result -> LOGGER.debug("{}", result));
 
-        Reservation reservation = new Reservation(foundUser, Set.of(mulhouse, albi));
+        Reservation reservation = new Reservation(user, Set.of(mulhouse, albi));
         reservationService.createReservation(reservation);
         reservationService.getAllReservations().forEach(result -> LOGGER.debug("{}", result));
     }
