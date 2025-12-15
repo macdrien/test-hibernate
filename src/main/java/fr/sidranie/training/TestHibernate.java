@@ -1,5 +1,7 @@
 package fr.sidranie.training;
 
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,11 +42,13 @@ public class TestHibernate {
             LOGGER.warn("User not found");
         }
 
-        Room room = new Room(new RoomName("Mulhouse"));
-        roomService.createRoom(room);
+        Room mulhouse = new Room(new RoomName("Mulhouse"));
+        roomService.createRoom(mulhouse);
+        Room albi = new Room(new RoomName("Albi"));
+        roomService.createRoom(albi);
         roomService.getAllRooms().forEach(result -> LOGGER.debug("{}", result));
 
-        Reservation reservation = new Reservation();
+        Reservation reservation = new Reservation(foundUser, Set.of(mulhouse, albi));
         reservationService.createReservation(reservation);
         reservationService.getAllReservations().forEach(result -> LOGGER.debug("{}", result));
     }

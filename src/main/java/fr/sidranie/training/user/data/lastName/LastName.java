@@ -20,11 +20,11 @@ public class LastName {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("LastName{");
-        sb.append(value);
-        sb.append('}');
-        return sb.toString();
+        return new StringBuilder()
+            .append("LastName{")
+            .append(value)
+            .append('}')
+            .toString();
     }
 
 }

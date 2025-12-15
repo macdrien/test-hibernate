@@ -26,10 +26,10 @@ public class ReservationDateTime {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("ReservationDateTime{");
-        sb.append(value);
-        sb.append('}');
-        return sb.toString();
+        return new StringBuilder()
+            .append("ReservationDateTime{")
+            .append(value)
+            .append('}')
+            .toString();
     }
 }

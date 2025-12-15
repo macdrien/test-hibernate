@@ -1,6 +1,5 @@
 package fr.sidranie.training;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -9,9 +8,11 @@ import fr.sidranie.training.reservation.Reservation;
 import fr.sidranie.training.room.Room;
 import fr.sidranie.training.user.User;
 
+import jakarta.persistence.EntityManager;
+
 public class SessionFactoryProvider {
     
-    private static SessionFactory instance;
+    private static EntityManager instance;
 
     private SessionFactoryProvider() {
     }
@@ -25,14 +26,15 @@ public class SessionFactoryProvider {
                     .addAnnotatedClass(Room.class)
                     .addAnnotatedClass(Reservation.class)
                     .buildMetadata()
-                    .buildSessionFactory();
+                    .buildSessionFactory()
+                    .createEntityManager();
         } catch (Exception e) {
             StandardServiceRegistryBuilder.destroy(registry);
             throw e;
         }
     }
 
-    public static SessionFactory getSessionFactory() {
+    public static EntityManager getEntityManager() {
         if (instance == null) {
             buildSessionFactory();
         }

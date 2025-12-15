@@ -11,7 +11,7 @@ public class RoomRepository {
     private final EntityManager entityManager;
 
     public RoomRepository() {
-        this.entityManager = SessionFactoryProvider.getSessionFactory().createEntityManager();
+        this.entityManager = SessionFactoryProvider.getEntityManager();
     }
 
     public List<Room> findAll() {

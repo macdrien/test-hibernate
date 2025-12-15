@@ -1,5 +1,8 @@
 package fr.sidranie.training.user;
 
+import java.util.Set;
+
+import fr.sidranie.training.reservation.Reservation;
 import fr.sidranie.training.user.data.firstName.FirstName;
 import fr.sidranie.training.user.data.firstName.FirstNameConverter;
 import fr.sidranie.training.user.data.lastName.LastName;
@@ -12,8 +15,10 @@ import fr.sidranie.training.user.data.username.UsernameConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,6 +44,9 @@ public class User {
     @Column(nullable = false)
     @Convert(converter = LastNameConverter.class)
     private LastName lastName;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Reservation> reservations;
 
     public User() {
     }
@@ -104,5 +112,13 @@ public class User {
         sb.append(", lastName=").append(lastName.toString());
         sb.append('}');
         return sb.toString();
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

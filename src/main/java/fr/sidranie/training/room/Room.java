@@ -1,24 +1,34 @@
 package fr.sidranie.training.room;
 
+import java.util.Set;
+
+import fr.sidranie.training.reservation.Reservation;
 import fr.sidranie.training.room.data.roomName.RoomName;
 import fr.sidranie.training.room.data.roomName.RoomNameConverter;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "rooms")
 public class Room {
-    
     @Id
     @GeneratedValue
     private Long id;
     
     @Convert(converter = RoomNameConverter.class)
     private RoomName name;
+
+    @ManyToMany(mappedBy = "rooms",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Reservation> reservations;
 
     public Room() {
     }
@@ -51,5 +61,13 @@ public class Room {
         sb.append(", name=").append(name.toString());
         sb.append('}');
         return sb.toString();
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

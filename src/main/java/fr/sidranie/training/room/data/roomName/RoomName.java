@@ -17,10 +17,10 @@ public class RoomName {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("RoomName{");
-        sb.append("value=").append(value);
-        sb.append(" Room}");
-        return sb.toString();
+        return new StringBuilder()
+            .append("RoomName{")
+            .append(value)
+            .append(" Room}")
+            .toString();
     }
 }

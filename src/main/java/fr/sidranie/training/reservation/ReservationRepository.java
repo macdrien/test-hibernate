@@ -10,7 +10,7 @@ public class ReservationRepository {
     private final EntityManager entityManager;
 
     public ReservationRepository() {
-        this.entityManager = SessionFactoryProvider.getSessionFactory().createEntityManager();
+        this.entityManager = SessionFactoryProvider.getEntityManager();
     }
 
     public List<Reservation> findAll() {
@@ -22,7 +22,6 @@ public class ReservationRepository {
         if (reservation.getId() != null) {
             throw new IllegalArgumentException("Reservation already has an id");
         }
-
         entityManager.getTransaction().begin();
         entityManager.persist(reservation);
         entityManager.getTransaction().commit();

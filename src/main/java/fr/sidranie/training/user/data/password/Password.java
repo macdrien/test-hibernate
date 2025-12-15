@@ -20,11 +20,11 @@ public class Password {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Password{");
-        sb.append(value.isEmpty() ? "" : "**********");
-        sb.append('}');
-        return sb.toString();
+        return new StringBuilder()
+            .append("Password{")
+            .append(value.isEmpty() ? "" : "**********")
+            .append('}')
+            .toString();
     }
 
 }

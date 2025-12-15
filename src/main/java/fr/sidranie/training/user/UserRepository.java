@@ -11,7 +11,7 @@ public class UserRepository {
     private final EntityManager entityManager;
 
     public UserRepository() {
-        this.entityManager = SessionFactoryProvider.getSessionFactory().createEntityManager();
+        this.entityManager = SessionFactoryProvider.getEntityManager();
     }
 
     public List<User> findAll() {

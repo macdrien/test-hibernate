@@ -17,11 +17,11 @@ public class FirstName {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("FirstName{");
-        sb.append(value);
-        sb.append('}');
-        return sb.toString();
+        return new StringBuilder()
+            .append("FirstName{")
+            .append(value)
+            .append('}')
+            .toString();
     }
 
 }

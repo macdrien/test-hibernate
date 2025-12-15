@@ -20,11 +20,11 @@ public class Username {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Username{");
-        sb.append(value);
-        sb.append('}');
-        return sb.toString();
+        return new StringBuilder()
+            .append("Username{")
+            .append(value)
+            .append('}')
+            .toString();
     }
 
 }

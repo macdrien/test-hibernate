@@ -1,6 +1,7 @@
 package fr.sidranie.training.user;
 
 import java.util.Collection;
+import java.util.Set;
 
 import fr.sidranie.training.user.data.username.Username;
 
@@ -24,6 +25,9 @@ public class UserService {
     }
     
     public void registerUser(User user) {
+        if (user.getReservations() == null) {
+            user.setReservations(Set.of());
+        }
         userRepository.save(user);
     }
 }
