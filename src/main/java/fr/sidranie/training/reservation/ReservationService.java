@@ -30,11 +30,16 @@ public class ReservationService {
             throw new IllegalArgumentException("Reservation end date cannot be before begin date");
         }
 
+        ReservationDateTime now = ReservationDateTime.now();
+        if (reservation.getReservationBeginDate().getValue().isBefore(now.getValue().toLocalDate())) {
+            throw new IllegalArgumentException("Cannot reserve a room in the past");
+        }
+        reservation.setReservationDateTime(now);
+
         if (isReservationForRoomInInterval(reservation.getRoom(), reservation.getReservationBeginDate(), reservation.getReservationEndDate())) {
             throw new IllegalArgumentException("There is already a reservation for the selected room in the given interval");
         }
 
-        reservation.setReservationDateTime(ReservationDateTime.now());
         reservationRepository.save(reservation);
     }
 

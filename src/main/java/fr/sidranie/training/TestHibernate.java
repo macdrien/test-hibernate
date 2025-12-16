@@ -1,7 +1,6 @@
 package fr.sidranie.training;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +27,8 @@ public class TestHibernate {
         RoomService roomService = new RoomService();
         ReservationService reservationService = new ReservationService();
 
+        LocalDate today = LocalDate.now();
+
         User user = new User(
             new Username("john_doe"),
             new Password("securePassword123"),
@@ -44,25 +45,34 @@ public class TestHibernate {
         roomService.getAllRooms().forEach(result -> LOGGER.debug("{}", result));
 
         Reservation reservation = new Reservation(user, albi,
-                new ReservationBeginDate(LocalDate.of(2025, 12, 10)),
-                new ReservationEndDate(LocalDate.of(2025, 12, 12)));
+                new ReservationBeginDate(today),
+                new ReservationEndDate(today.plusDays(3)));
         reservationService.createReservation(reservation);
         reservationService.getAllReservations().forEach(result -> LOGGER.debug("{}", result));
 
-        try {
+        try { // Reservation with end date before begin date
             Reservation invalidReservation = new Reservation(user, mulhouse,
-                    new ReservationBeginDate(LocalDate.of(2025, 12, 15)),
-                    new ReservationEndDate(LocalDate.of(2025, 12, 14)));
+                    new ReservationBeginDate(today.plusDays(2)),
+                    new ReservationEndDate(today));
             reservationService.createReservation(invalidReservation);
         } catch (IllegalArgumentException e) {
             LOGGER.error("Failed to create reservation: {}", e.getMessage());
         }
 
-        try {
+        try { // Reservation will conflict with the existing one
             Reservation overlappingReservation = new Reservation(user, albi,
-                    new ReservationBeginDate(LocalDate.of(2025, 12, 11)),
-                    new ReservationEndDate(LocalDate.of(2025, 12, 13)));
+                    new ReservationBeginDate(today.plusDays(2)),
+                    new ReservationEndDate(today.plusDays(4)));
             reservationService.createReservation(overlappingReservation);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Failed to create reservation: {}", e.getMessage());
+        }
+
+        try { // The reservation starts in the past
+            Reservation pastReservation = new Reservation(user, mulhouse,
+                    new ReservationBeginDate(today.minusDays(2)),
+                    new ReservationEndDate(today.plusDays(2)));
+            reservationService.createReservation(pastReservation);
         } catch (IllegalArgumentException e) {
             LOGGER.error("Failed to create reservation: {}", e.getMessage());
         }
