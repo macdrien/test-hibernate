@@ -3,8 +3,12 @@ package fr.sidranie.training.reservation;
 import java.util.Iterator;
 import java.util.Set;
 
+import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDate;
+import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDateConverter;
 import fr.sidranie.training.reservation.data.reservationDateTime.ReservationDateTime;
 import fr.sidranie.training.reservation.data.reservationDateTime.ReservationDateTimeConverter;
+import fr.sidranie.training.reservation.data.reservationEndDate.ReservationEndDate;
+import fr.sidranie.training.reservation.data.reservationEndDate.ReservationEndDateConverter;
 import fr.sidranie.training.room.Room;
 import fr.sidranie.training.user.User;
 
@@ -30,6 +34,14 @@ public class Reservation {
     @Convert(converter = ReservationDateTimeConverter.class)
     private ReservationDateTime reservationDateTime;
 
+    @Column(name = "reservation_begin_date", nullable = false)
+    @Convert(converter = ReservationBeginDateConverter.class)
+    private ReservationBeginDate reservationBeginDate;
+
+    @Column(name = "reservation_end_date", nullable = false)
+    @Convert(converter = ReservationEndDateConverter.class)
+    private ReservationEndDate reservationEndDate;
+
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private User user;
@@ -45,9 +57,14 @@ public class Reservation {
         this.id = id;
     }
 
-    public Reservation(User user, Set<Room> rooms) {
+    public Reservation(User user,
+            Set<Room> rooms,
+            ReservationBeginDate reservationBeginDate,
+            ReservationEndDate reservationEndDate) {
         this.user = user;
         this.rooms = rooms;
+        this.reservationBeginDate = reservationBeginDate;
+        this.reservationEndDate = reservationEndDate;
     }
 
     public Long getId() {
@@ -64,6 +81,22 @@ public class Reservation {
 
     public void setReservationDateTime(ReservationDateTime reservationDateTime) {
         this.reservationDateTime = reservationDateTime;
+    }
+
+    public ReservationBeginDate getReservationBeginDate() {
+        return reservationBeginDate;
+    }
+
+    public void setReservationBeginDate(ReservationBeginDate reservationBeginDateTime) {
+        this.reservationBeginDate = reservationBeginDateTime;
+    }
+
+    public ReservationEndDate getReservationEndDate() {
+        return reservationEndDate;
+    }
+
+    public void setReservationEndDate(ReservationEndDate reservationEndDate) {
+        this.reservationEndDate = reservationEndDate;
     }
     
     public User getUser() {
@@ -88,6 +121,8 @@ public class Reservation {
         sb.append("Reservation{");
         sb.append("id=").append(id);
         sb.append(", reservationDateTime=").append(reservationDateTime);
+        sb.append(", reservationBeginDate=").append(reservationBeginDate);
+        sb.append(", reservationEndDate=").append(reservationEndDate);
         sb.append(", user=").append(user);
 
         sb.append(", rooms=[");

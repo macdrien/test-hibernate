@@ -1,5 +1,6 @@
 package fr.sidranie.training;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -7,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import fr.sidranie.training.reservation.Reservation;
 import fr.sidranie.training.reservation.ReservationService;
+import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDate;
+import fr.sidranie.training.reservation.data.reservationEndDate.ReservationEndDate;
 import fr.sidranie.training.room.Room;
 import fr.sidranie.training.room.RoomService;
 import fr.sidranie.training.room.data.roomName.RoomName;
@@ -40,8 +43,21 @@ public class TestHibernate {
         roomService.createRoom(albi);
         roomService.getAllRooms().forEach(result -> LOGGER.debug("{}", result));
 
-        Reservation reservation = new Reservation(user, Set.of(mulhouse, albi));
+        Reservation reservation = new Reservation(user,
+                Set.of(mulhouse, albi),
+                new ReservationBeginDate(LocalDate.of(2025, 12, 10)),
+                new ReservationEndDate(LocalDate.of(2025, 12, 12)));
         reservationService.createReservation(reservation);
         reservationService.getAllReservations().forEach(result -> LOGGER.debug("{}", result));
+
+        try {
+            Reservation invalidReservation = new Reservation(user,
+                    Set.of(mulhouse),
+                    new ReservationBeginDate(LocalDate.of(2025, 12, 15)),
+                    new ReservationEndDate(LocalDate.of(2025, 12, 14)));
+            reservationService.createReservation(invalidReservation);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Failed to create reservation: {}", e.getMessage());
+        }
     }
 }
