@@ -1,8 +1,5 @@
 package fr.sidranie.training.reservation;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDate;
 import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDateConverter;
 import fr.sidranie.training.reservation.data.reservationDateTime.ReservationDateTime;
@@ -19,7 +16,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -46,9 +42,9 @@ public class Reservation {
             cascade = CascadeType.ALL)
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private Set<Room> rooms;
+    private Room room;
     
     public Reservation() {
     }
@@ -58,11 +54,11 @@ public class Reservation {
     }
 
     public Reservation(User user,
-            Set<Room> rooms,
+            Room room,
             ReservationBeginDate reservationBeginDate,
             ReservationEndDate reservationEndDate) {
         this.user = user;
-        this.rooms = rooms;
+        this.room = room;
         this.reservationBeginDate = reservationBeginDate;
         this.reservationEndDate = reservationEndDate;
     }
@@ -107,12 +103,12 @@ public class Reservation {
         this.user = user;
     }
     
-    public Set<Room> getRooms() {
-        return rooms;
+    public Room getRoom() {
+        return room;
     }
     
-    public void setRooms(Set<Room> rooms) {
-        this.rooms = rooms;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override
@@ -124,18 +120,8 @@ public class Reservation {
         sb.append(", reservationBeginDate=").append(reservationBeginDate);
         sb.append(", reservationEndDate=").append(reservationEndDate);
         sb.append(", user=").append(user);
-
-        sb.append(", rooms=[");
-        Iterator<Room> roomIterator = rooms.iterator();
-        while (roomIterator.hasNext()) {
-            Room room = roomIterator.next();
-            sb.append(room.toString());
-            if (roomIterator.hasNext()) {
-                sb.append(", ");
-            }
-        }
-
-        sb.append("]}");
+        sb.append(", room=").append(room);
+        sb.append('}');
         return sb.toString();
     }
 }

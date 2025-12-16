@@ -12,7 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,7 +25,7 @@ public class Room {
     @Convert(converter = RoomNameConverter.class)
     private RoomName name;
 
-    @ManyToMany(mappedBy = "rooms",
+    @OneToMany(mappedBy = "room",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Reservation> reservations;

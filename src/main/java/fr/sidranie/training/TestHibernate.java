@@ -43,19 +43,26 @@ public class TestHibernate {
         roomService.createRoom(albi);
         roomService.getAllRooms().forEach(result -> LOGGER.debug("{}", result));
 
-        Reservation reservation = new Reservation(user,
-                Set.of(mulhouse, albi),
+        Reservation reservation = new Reservation(user, albi,
                 new ReservationBeginDate(LocalDate.of(2025, 12, 10)),
                 new ReservationEndDate(LocalDate.of(2025, 12, 12)));
         reservationService.createReservation(reservation);
         reservationService.getAllReservations().forEach(result -> LOGGER.debug("{}", result));
 
         try {
-            Reservation invalidReservation = new Reservation(user,
-                    Set.of(mulhouse),
+            Reservation invalidReservation = new Reservation(user, mulhouse,
                     new ReservationBeginDate(LocalDate.of(2025, 12, 15)),
                     new ReservationEndDate(LocalDate.of(2025, 12, 14)));
             reservationService.createReservation(invalidReservation);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("Failed to create reservation: {}", e.getMessage());
+        }
+
+        try {
+            Reservation overlappingReservation = new Reservation(user, albi,
+                    new ReservationBeginDate(LocalDate.of(2025, 12, 11)),
+                    new ReservationEndDate(LocalDate.of(2025, 12, 13)));
+            reservationService.createReservation(overlappingReservation);
         } catch (IllegalArgumentException e) {
             LOGGER.error("Failed to create reservation: {}", e.getMessage());
         }

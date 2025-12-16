@@ -2,7 +2,10 @@ package fr.sidranie.training.reservation;
 
 import java.util.List;
 
+import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDate;
 import fr.sidranie.training.reservation.data.reservationDateTime.ReservationDateTime;
+import fr.sidranie.training.reservation.data.reservationEndDate.ReservationEndDate;
+import fr.sidranie.training.room.Room;
 
 public class ReservationService {
     private final ReservationRepository reservationRepository;
@@ -27,8 +30,18 @@ public class ReservationService {
             throw new IllegalArgumentException("Reservation end date cannot be before begin date");
         }
 
+        if (isReservationForRoomInInterval(reservation.getRoom(), reservation.getReservationBeginDate(), reservation.getReservationEndDate())) {
+            throw new IllegalArgumentException("There is already a reservation for the selected room in the given interval");
+        }
+
         reservation.setReservationDateTime(ReservationDateTime.now());
         reservationRepository.save(reservation);
     }
 
+    public boolean isReservationForRoomInInterval(Room room, ReservationBeginDate reservationBeginDate, ReservationEndDate reservationEndDate) {
+        return reservationRepository.existsReservationForRoomInInterval(
+                room,
+                reservationBeginDate.getValue(),
+                reservationEndDate.getValue());
+    }
 }
