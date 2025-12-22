@@ -10,11 +10,11 @@ import fr.sidranie.training.room.Room;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
 
-    public ReservationService() {
-        this.reservationRepository = new ReservationRepository();
+    public ReservationService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
     }
 
-    public List<Reservation> getAllReservations() {
+    public List<Reservation> getAll() {
         return reservationRepository.findAll();
     }
 

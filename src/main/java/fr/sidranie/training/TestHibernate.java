@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.sidranie.training.reservation.Reservation;
+import fr.sidranie.training.reservation.ReservationRepository;
 import fr.sidranie.training.reservation.ReservationService;
 import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDate;
 import fr.sidranie.training.reservation.data.reservationEndDate.ReservationEndDate;
@@ -22,10 +23,10 @@ import fr.sidranie.training.user.data.username.Username;
 public class TestHibernate {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestHibernate.class);
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         UserService userService = new UserService();
         RoomService roomService = new RoomService();
-        ReservationService reservationService = new ReservationService();
+        ReservationService reservationService = new ReservationService(new ReservationRepository());
 
         LocalDate today = LocalDate.now();
 
@@ -48,7 +49,7 @@ public class TestHibernate {
                 new ReservationBeginDate(today),
                 new ReservationEndDate(today.plusDays(3)));
         reservationService.createReservation(reservation);
-        reservationService.getAllReservations().forEach(result -> LOGGER.debug("{}", result));
+        reservationService.getAll().forEach(result -> LOGGER.debug("{}", result));
 
         try { // Reservation with end date before begin date
             Reservation invalidReservation = new Reservation(user, mulhouse,
