@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,7 +31,7 @@ import fr.sidranie.training.user.data.lastName.LastName;
 import fr.sidranie.training.user.data.password.Password;
 import fr.sidranie.training.user.data.username.Username;
 
-class ReservationServiceTest extends MockedTestCase {
+class ReservationServiceMockedTest extends MockedTestCase {
 
     @Mock
     private ReservationRepository reservationRepository;
