@@ -1,7 +1,5 @@
 package fr.sidranie.training.reservation;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,8 +10,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -45,13 +41,6 @@ class ReservationServiceMockedTest extends MockedTestCase {
             new FirstName("john"),
             new LastName("doe"));
     private Room defaultRoom = new Room(new RoomName("Test"));
-
-    @Test
-    public void testGetAll() {
-        List<Reservation> expected = Collections.singletonList(new Reservation(1L));
-        when(reservationRepository.findAll()).thenReturn(expected);
-        assertEquals(expected, reservationService.getAll());
-    }
 
     @Test
     public void testCreateReservationNominal() {
@@ -110,25 +99,12 @@ class ReservationServiceMockedTest extends MockedTestCase {
                 reservationBeginDate,
                 reservationEndDate);
 
-        when(reservationService.isReservationForRoomInInterval(defaultRoom, reservationBeginDate, reservationEndDate))
+        when(reservationRepository.existsReservationForRoomInInterval(
+                defaultRoom,
+                reservationBeginDate.getValue(),
+                reservationEndDate.getValue()))
                 .thenReturn(true);
 
         assertThrowsExactly(IllegalArgumentException.class, () -> reservationService.createReservation(reservation));
-    }
-
-    @Test
-    public void testIsReservationForRoomInIntervalWithTrue() {
-        LocalDate start = LocalDate.now().plusDays(1);
-        LocalDate end = LocalDate.now().plusDays(3);
-        when(reservationRepository.existsReservationForRoomInInterval(defaultRoom, start, end)).thenReturn(true);
-        assertTrue(reservationService.isReservationForRoomInInterval(defaultRoom, new ReservationBeginDate(start), new ReservationEndDate(end)));
-    }
-
-    @Test
-    public void testIsReservationForRoomInIntervalWithFalse() {
-        LocalDate start = LocalDate.now().plusDays(1);
-        LocalDate end = LocalDate.now().plusDays(3);
-        when(reservationRepository.existsReservationForRoomInInterval(defaultRoom, start, end)).thenReturn(false);
-        assertFalse(reservationService.isReservationForRoomInInterval(defaultRoom, new ReservationBeginDate(start), new ReservationEndDate(end)));
     }
 }

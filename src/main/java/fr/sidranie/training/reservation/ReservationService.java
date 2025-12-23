@@ -1,21 +1,15 @@
 package fr.sidranie.training.reservation;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
-import fr.sidranie.training.reservation.data.reservationBeginDate.ReservationBeginDate;
 import fr.sidranie.training.reservation.data.reservationDateTime.ReservationDateTime;
-import fr.sidranie.training.reservation.data.reservationEndDate.ReservationEndDate;
-import fr.sidranie.training.room.Room;
 
+@Service
 public class ReservationService {
     private final ReservationRepository reservationRepository;
 
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
-    }
-
-    public List<Reservation> getAll() {
-        return reservationRepository.findAll();
     }
 
     public void createReservation(Reservation reservation) {
@@ -36,17 +30,13 @@ public class ReservationService {
         }
         reservation.setReservationDateTime(now);
 
-        if (isReservationForRoomInInterval(reservation.getRoom(), reservation.getReservationBeginDate(), reservation.getReservationEndDate())) {
+        if (reservationRepository.existsReservationForRoomInInterval(
+                reservation.getRoom(),
+                reservation.getReservationBeginDate().getValue(),
+                reservation.getReservationEndDate().getValue())) {
             throw new IllegalArgumentException("There is already a reservation for the selected room in the given interval");
         }
 
         reservationRepository.save(reservation);
-    }
-
-    public boolean isReservationForRoomInInterval(Room room, ReservationBeginDate reservationBeginDate, ReservationEndDate reservationEndDate) {
-        return reservationRepository.existsReservationForRoomInInterval(
-                room,
-                reservationBeginDate.getValue(),
-                reservationEndDate.getValue());
     }
 }

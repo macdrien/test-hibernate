@@ -1,44 +1,13 @@
 package fr.sidranie.training.user;
 
-import java.util.List;
+import java.util.Optional;
 
-import fr.sidranie.training.SessionFactoryProvider;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import fr.sidranie.training.user.data.username.Username;
 
-import jakarta.persistence.EntityManager;
-
-public class UserRepository {
-    private final EntityManager entityManager;
-
-    public UserRepository() {
-        this.entityManager = SessionFactoryProvider.getEntityManager();
-    }
-
-    public List<User> findAll() {
-        return entityManager.createQuery("from User", User.class)
-            .getResultList();
-    }
-
-    public void save(User user) {
-        if (user.getId() != null) {
-            throw new IllegalArgumentException("User already has an id");
-        }
-        if (findByUsername(user.getUsername()) != null) {
-            throw new IllegalArgumentException("Username already exists");
-        }
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(user);
-        entityManager.getTransaction().commit();
-    }
-
-    public User findByUsername(Username username) {
-        return entityManager.createQuery("from User where username = :username", User.class)
-            .setParameter("username", username)
-            .getSingleResultOrNull();
-    }
-
-    public User findById(Long id) {
-        return entityManager.find(User.class, id);
-    }
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(Username username);
 }
